@@ -29,17 +29,17 @@ function FileAccess(filepath){
     })
 }
 
-function FileReader(filepath){
+function StreamFile(filepath){
     return new Promise((resolve,reject)=>{
-        fs.readFile(filepath,(error,content)=>{
-            if(!error){
-                resolve(content);
-            }
-            else
-            {
-                reject(error);
-            }
-        })
+       let fileStream = fs.createReadStream(filepath);
+
+       fileStream.on("open", ()=>{
+           resolve(fileStream);
+       })
+
+       fileStream.on('error', error=>{
+           reject(error);
+       })
     })
 }
 
@@ -51,10 +51,10 @@ function WebServer(req,res){
  
  // Check requested file is accessible or not
  FileAccess(filepath)
- .then(FileReader)
- .then(content=>{
+ .then(StreamFile)
+ .then(filestream =>{
      res.writeHead(200,{"Content-Type" : contentType});
-     res.end(content,'utf-8');
+     filestream.pipe(res);
  })
  .catch(error=>{
     res.writeHead(404);
