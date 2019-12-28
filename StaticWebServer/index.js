@@ -15,41 +15,53 @@ let mimes ={
     '.jpg' : 'image/jpeg',
 }
 
-function webserver(req,res){
+function FileAccess(filepath){
+    return new Promise((resolve, reject) => {
+        fs.access(filepath, fs.F_OK, error =>{
+            if(!error){
+                resolve(filepath);
+            }
+            else
+            {
+                reject(error);
+            }
+        })
+    })
+}
+
+function FileReader(filepath){
+    return new Promise((resolve,reject)=>{
+        fs.readFile(filepath,(error,content)=>{
+            if(!error){
+                resolve(content);
+            }
+            else
+            {
+                reject(error);
+            }
+        })
+    })
+}
+
+function WebServer(req,res){
+// Load reuesdted files
  let baseURI = url.parse(req.url);
  let filepath = __dirname + (baseURI.pathname === '/' ? '/index.htm' : baseURI.path);
+ let contentType = mimes[path.extname(filepath)];
  
  // Check requested file is accessible or not
- fs.access(filepath, fs.F_OK, error => {
-     if(!error){
-         fs.readFile(filepath, (error, content)=>{
-             if(!error)
-             {
-                // Resolve the content type
-                let contentType = mimes[path.extname(filepath)];
-                // Serve the file from the buffer
-                res.writeHead(200, {'Content-Type' : contentType});
-                res.end(content, 'utf-8');
-             }
-             else
-             {
-                fileError(res);
-             }
-         });
-     }
-     else
-     {
-        fileError(res);
-     }
+ FileAccess(filepath)
+ .then(FileReader)
+ .then(content=>{
+     res.writeHead(200,{"Content-Type" : contentType});
+     res.end(content,'utf-8');
  })
-}
+ .catch(error=>{
+    res.writeHead(404);
+    res.end(JSON.stringify(error));
+ })
+};
 
-// Serve a 500 in case file is not found/ readable
-function fileError(res){
-    res.writeHead(500);
-    res.end("The server could not read the file requested.")
-}
-
-http.createServer(webserver).listen(port, ()=>{
+http.createServer(WebServer).listen(port, ()=>{
     console.log("Hosting directory on port :: " + port);
 })
