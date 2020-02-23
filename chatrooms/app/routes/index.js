@@ -29,7 +29,12 @@ module.exports = () => {
             '/auth/twitter/callback' : passport.authenticate('twitter',{
                 successRedirect : '/rooms',
                 failureRedirect : '/'
-            })
+            }),
+            '/logout' : (req,res,next)=>{
+                // method by passport
+                req.logout();
+                res.redirect('/');
+            }
         },
         'post': {},
         'NA' : (req,res,next)=>{
