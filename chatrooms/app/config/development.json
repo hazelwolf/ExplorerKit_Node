@@ -1,0 +1,11 @@
+{
+    "host" : "http://localhost:3000",
+    "dbURI" : "",
+    "sessionSecret": "",
+    "twitter" :{
+        "consumerKey": "",
+        "consumerSecret": "",
+        " callbackURL" : "http://127.0.0.1:3000/auth/twitter/callback",
+        "profileFields" : ["id","displayName","photos"]
+    }
+}

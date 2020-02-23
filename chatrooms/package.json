@@ -1,0 +1,21 @@
+{
+  "name": "chatrooms",
+  "version": "1.0.0",
+  "description": "A complete node middleware showcase which uses authentication, databases, sockets and logging modules as studied on Udemy.  ",
+  "main": "server.js",
+  "scripts": {
+    "test": "nodemon server.js"
+  },
+  "author": "hazelWolf",
+  "license": "ISC",
+  "dependencies": {
+    "connect-mongo": "^3.2.0",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "mongoose": "^5.9.2",
+    "passport": "^0.4.1",
+    "passport-facebook": "^3.0.0",
+    "passport-twitter": "^1.0.4"
+  }
+}
