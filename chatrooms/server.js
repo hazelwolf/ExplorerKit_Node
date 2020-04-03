@@ -12,6 +12,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', chatrooms.router);
 
-app.listen(app.get('port'),()=>{
+chatrooms.ioServer(app).listen(app.get('port'),()=>{
     console.log("Express running on port : " + app.get('port'));
 });

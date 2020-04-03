@@ -9,15 +9,15 @@ module.exports = () => {
                     pageTitle: 'Login Page'
                 });
             },
-            '/rooms': (req, res, next) => {
+            '/rooms': [h.isAuthenticated, (req, res, next) => {
                 console.log(JSON.stringify((req.user)));
                 res.render('rooms',{
                     user : req.user, 
                 });
-            },
-            '/chat': (req, res, next) => {
-                res.render('chatroom');
-            },
+            }],
+            '/chat': [h.isAuthenticated,(req, res, next) => {
+                res.render('chatroom',{user : req.user});
+            }],
             '/getsession' : (req, res, next)=>{
                 res.send("My fav color : " + req.session.color)
             },

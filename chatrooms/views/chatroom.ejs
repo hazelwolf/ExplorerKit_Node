@@ -22,7 +22,7 @@
 				<div class="chatMessages">
 				<!-- Loop this for chat messages -->
 				<div class="chatBlock">
-					<div class="userPic"><img src="/img/user.jpg"></div>
+					<div class="userPic"><img src="<%=user.profilePic%>" alt="<%=user.fullName%>"></div>
 					<div class="chatMsg">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti perferendis eius aut nesciunt necessitatibus ad nulla, qui sequi, id nam. Possimus odit aut nisi veritatis amet distinctio id officiis ipsam!</div>
 				</div>					
 				<!-- loop end -->
@@ -35,8 +35,8 @@
 			<div class="chatUsers">
 			<!-- Loop this for chat users -->
 				<div class="userBlock">
-					<div class="userPic"><img src="/img/user.jpg" alt="John Doe"></div>
-					<div class="cuserName">John Doe</div>
+					<div class="userPic"><img src="<%=user.profilePic%>" alt="<%=user.fullName%>"></div>
+					<div class="cuserName"><%=user.fullName%></div>
 				</div>
 			<!-- loop end -->
 			</div>
